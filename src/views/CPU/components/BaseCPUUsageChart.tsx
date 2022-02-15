@@ -11,8 +11,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { fetchCPU } from "../../api/cpu";
-import { toTime } from "../../utils/formatNumber";
+import { fetchCPU } from "../../../api/cpu";
+import { toTime } from "../../../utils/formatNumber";
 
 ChartJS.register(
   CategoryScale,
@@ -24,14 +24,16 @@ ChartJS.register(
   Legend
 );
 
-const CPUUsageChart = () => {
-  // const [chartData, setChartData] = useState([] as any);
+/**
+ * 基础 CPU 使用率
+ */
+const BaseCPUUsageChart = () => {
   const {
     status,
-    data: CPUUsageData,
+    data: BaseCPUUsageData,
     error,
-  } = useQuery<any>("CPUUsage", async () => {
-    const res: any = await fetchCPU("CPUUsage");
+  } = useQuery<any>("BaseCpuUsage", async () => {
+    const res: any = await fetchCPU("BaseCpuUsage");
 
     const timestamps = res.DataPoints[0].Timestamps.slice(-10).map(
       (item: number) => toTime(item)
@@ -41,7 +43,7 @@ const CPUUsageChart = () => {
       labels: timestamps,
       datasets: [
         {
-          label: "CPU 利用率",
+          label: "基础 CPU 使用率",
           data: values,
           borderColor: "rgb(53, 162, 235)",
           backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -56,8 +58,12 @@ const CPUUsageChart = () => {
   }
 
   return (
-    <div style={{ width: "100%", height: "300px" }}>
+    <>
+      <Box sx={{ pt: 10}}>
+        <Typography variant="h5">基础 CPU 使用率</Typography>
+      </Box>
       <Line
+        height={70}
         options={{
           responsive: true,
           plugins: {
@@ -66,14 +72,14 @@ const CPUUsageChart = () => {
             },
             title: {
               display: true,
-              text: "Chart.js Line Chart",
+              text: "基础 CPU 使用率",
             },
           },
         }}
-        data={CPUUsageData}
+        data={BaseCPUUsageData}
       />
-    </div>
+    </>
   );
 };
 
-export default CPUUsageChart;
+export default BaseCPUUsageChart;

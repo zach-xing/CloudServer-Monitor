@@ -13,8 +13,6 @@ import {
   Typography,
 } from "@mui/material";
 import {
-  Menu as MenuIcon,
-  ChevronLeft as ChevronLeftIcon,
   LightMode as LightModeIcon,
   Nightlight as NightlightIcon,
 } from "@mui/icons-material";
@@ -32,7 +30,6 @@ const drawerWidth = 240;
 export default function App() {
   const navigate = useNavigate();
   const route = useLocation(); // URL 路由信息
-  const [open, setOpen] = useState(true);
   const [selectedPath, setSelectedPath] = useState("");
   const theme = useTheme();
   const themeMode = React.useContext(ThemeModeContext);
@@ -41,11 +38,6 @@ export default function App() {
     setSelectedPath(route.pathname);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // 切换 Drawer 的开关
-  const toggleDrawer = (tmp: boolean) => {
-    setOpen(tmp);
-  };
 
   // 编程式导航，并且切换样式表示选中当前导航
   const handleListItemClick = (
@@ -60,17 +52,8 @@ export default function App() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={true}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => toggleDrawer(true)}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
           <HeaderArea>
             <Typography variant="h6" noWrap component="div">
               Server monitor
@@ -101,12 +84,12 @@ export default function App() {
         }}
         variant="persistent"
         anchor="left"
-        open={open}
+        open={true}
       >
         <DrawerHeader>
-          <IconButton onClick={() => toggleDrawer(false)}>
+          {/* <IconButton onClick={() => toggleDrawer(false)}>
             <ChevronLeftIcon />
-          </IconButton>
+          </IconButton> */}
         </DrawerHeader>
         <Divider />
         <List>
@@ -122,7 +105,7 @@ export default function App() {
         </List>
       </Drawer>
 
-      <Main open={open}>
+      <Main open={true} style={{overflowY: "hidden"}}>
         <DrawerHeader />
         <Routes>
           <Route path="/" element={<CPU />} />

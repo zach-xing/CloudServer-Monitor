@@ -1,7 +1,6 @@
-import CPUUsageChart from "./CPUUsageChart";
-import CpuLoadavgChart from "./CpuLoadavgChart";
-import BaseCpuUsageChart from "./BaseCpuUsageChart";
-import Tmp from "./Tmp";
+import CPUUsageChart from "./components/CPUUsageChart";
+import CPULoadavgChart from "./components/CPULoadavgChart";
+import BaseCpuUsageChart from "./components/BaseCPUUsageChart";
 
 function CPU() {
   return (
@@ -46,9 +45,8 @@ function CPU() {
       {/* CPU 相关指标 --- end --- */}
 
       <CPUUsageChart />
-      {/* <CpuLoadavgChart />
-      <BaseCpuUsageChart /> */}
-      {/* <Tmp /> */}
+      <CPULoadavgChart />
+      <BaseCpuUsageChart />
     </>
   );
 }
