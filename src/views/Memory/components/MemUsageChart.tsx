@@ -32,9 +32,9 @@ ChartJS.register(
 const MemUsageChart = () => {
   const {
     status,
-    data: MemUsedData,
+    data: MemUsageData,
     error,
-  } = useQuery<any>("MemUsedData", async () => {
+  } = useQuery<any>("MemUsageData", async () => {
     const res: any = await fetchMemory("MemUsage");
 
     const timestamps = res.DataPoints[0].Timestamps.slice(-10).map(
@@ -79,7 +79,7 @@ const MemUsageChart = () => {
             },
           },
         }}
-        data={MemUsedData}
+        data={MemUsageData}
       />
     </>
   );
