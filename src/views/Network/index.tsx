@@ -1,8 +1,7 @@
-import React from "react";
-import LantrafficChart from "./LantrafficChart";
-import LanpkgChart from "./LanpkgChart";
-import WanpkgChart from "./WanpkgChart";
-import TcpCurrEstabChart from "./TcpCurrEstabChart";
+import LantrafficChart from "./components/LantrafficChart";
+import LanpkgChart from "./components/LanpkgChart";
+import WanpkgChart from "./components/WanpkgChart";
+import TcpCurrEstabChart from "./components/TcpCurrEstabChart";
 
 function Network() {
   return (
