@@ -13,6 +13,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { fetchNetwork } from "../../../api/network";
 import { toTime } from "../../../utils/formatNumber";
+import Loading from "../../../components/Loading";
 
 ChartJS.register(
   CategoryScale,
@@ -53,7 +54,7 @@ const TcpCurrEstabChart = () => {
     };
   });
 
-  if (status === "loading") return <h2>Loading...</h2>;
+  if (status === "loading") return <Loading title="TCP 连接数" />;
   if (status === "error") {
     return <h2>Error:{JSON.stringify(error, null, 2)}</h2>;
   }
