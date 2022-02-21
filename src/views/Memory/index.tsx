@@ -1,6 +1,6 @@
-import MemUsedChart from "./MemUsedChart";
-import MemUsageChart from "./MemUsageChart";
-import CvmDiskUsageChart from "./CvmDiskUsageChart";
+import MemUsedChart from "./components/MemUsedChart";
+import MemUsageChart from "./components/MemUsageChart";
+import CvmDiskUsageChart from "./components/CvmDiskUsageChart";
 
 function Memory() {
   return (

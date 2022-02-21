@@ -12,7 +12,7 @@ export const Block = styled("div")<{ percent: number }>(({ percent }) => ({
     height: 50,
     borderRadius: 20,
     width: `${percent}%`,
-    backgroundColor: "#66B366",
+    backgroundColor: "rgb(75, 192, 192)",
   },
   ".title": {
     position: "absolute",

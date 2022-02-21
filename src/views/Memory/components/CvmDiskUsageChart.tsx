@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import ProgressBar from "../../components/ProgressBar";
-import { fetchMemory } from "../../api/memory";
-import { toTime } from "../../utils/formatNumber";
+import ProgressBar from "../../../components/ProgressBar";
+import { fetchMemory } from "../../../api/memory";
+import { toTime } from "../../../utils/formatNumber";
 
 const CvmDiskUsageChart = () => {
   const [data, setData] = useState({} as any);
@@ -22,7 +22,7 @@ const CvmDiskUsageChart = () => {
 
   return (
     <>
-      <Box sx={{ p: 5, pb: 0 }}>
+      <Box>
         <Typography variant="h5">磁盘利用率</Typography>
       </Box>
       <Box sx={{ p: 5 }}>
