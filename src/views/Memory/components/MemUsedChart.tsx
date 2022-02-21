@@ -62,7 +62,7 @@ const MemUsedChart = () => {
 
   return (
     <>
-      <Box sx={{ pt: 10 }}>
+      <Box sx={{ pt: 5 }}>
         <Typography variant="h5">内存使用量</Typography>
       </Box>
       <Line
