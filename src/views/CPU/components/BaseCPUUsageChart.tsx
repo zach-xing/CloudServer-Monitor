@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useQuery } from "react-query";
 import {
@@ -14,6 +15,7 @@ import { Line } from "react-chartjs-2";
 import { fetchCPU } from "../../../api/cpu";
 import { toTime } from "../../../utils/formatNumber";
 import Loading from "../../../components/Loading";
+import SelectBlock from "../../../components/SelectBlock";
 
 ChartJS.register(
   CategoryScale,
@@ -29,12 +31,13 @@ ChartJS.register(
  * 基础 CPU 使用率
  */
 const BaseCPUUsageChart = () => {
+  const [period, setPeriod] = useState(300);
   const {
     status,
     data: BaseCPUUsageData,
     error,
-  } = useQuery<any>("BaseCpuUsage", async () => {
-    const res: any = await fetchCPU("BaseCpuUsage");
+  } = useQuery<any>(["BaseCpuUsage", period], async () => {
+    const res: any = await fetchCPU("BaseCpuUsage", period);
 
     const timestamps = res.DataPoints[0].Timestamps.slice(-10).map(
       (item: number) => toTime(item)
@@ -60,9 +63,14 @@ const BaseCPUUsageChart = () => {
 
   return (
     <>
-      <Box sx={{ pt: 10}}>
-        <Typography variant="h5">基础 CPU 使用率</Typography>
-      </Box>
+      <div style={{ display: "flex", alignItems: "center", marginTop: "50px" }}>
+        <Box sx={{ mr: 5 }}>
+          <Typography variant="h5">基础 CPU 使用率</Typography>
+        </Box>
+
+        <SelectBlock period={period} setPeriod={setPeriod} />
+      </div>
+
       <Line
         height={70}
         options={{

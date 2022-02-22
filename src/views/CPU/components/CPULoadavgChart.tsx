@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useQuery } from "react-query";
 import {
@@ -14,6 +15,7 @@ import { Line } from "react-chartjs-2";
 import { fetchCPU } from "../../../api/cpu";
 import { toTime } from "../../../utils/formatNumber";
 import Loading from "../../../components/Loading";
+import SelectBlock from "../../../components/SelectBlock";
 
 ChartJS.register(
   CategoryScale,
@@ -29,12 +31,13 @@ ChartJS.register(
  * CPU 平均负载组件
  */
 const CPULoadavgChart = () => {
+  const [period, setPeriod] = useState(300);
   const {
     status,
     data: CPULoadavgData,
     error,
-  } = useQuery<any>("CpuLoadavg", async () => {
-    const res: any = await fetchCPU("CpuLoadavg");
+  } = useQuery<any>(["CpuLoadavg", period], async () => {
+    const res: any = await fetchCPU("CpuLoadavg", period);
 
     const timestamps = res.DataPoints[0].Timestamps.slice(-10).map(
       (item: number) => toTime(item)
@@ -60,9 +63,14 @@ const CPULoadavgChart = () => {
 
   return (
     <>
-      <Box sx={{ pt: 10 }}>
-        <Typography variant="h5">CPU 平均负载</Typography>
-      </Box>
+      <div style={{ display: "flex", alignItems: "center", marginTop: "50px" }}>
+        <Box sx={{ mr: 5 }}>
+          <Typography variant="h5">CPU 平均负载</Typography>
+        </Box>
+
+        <SelectBlock period={period} setPeriod={setPeriod} />
+      </div>
+
       <Line
         height={70}
         options={{
