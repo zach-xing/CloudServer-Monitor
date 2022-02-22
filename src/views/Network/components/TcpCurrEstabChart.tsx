@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useQuery } from "react-query";
 import {
@@ -14,6 +15,7 @@ import { Line } from "react-chartjs-2";
 import { fetchNetwork } from "../../../api/network";
 import { toTime } from "../../../utils/formatNumber";
 import Loading from "../../../components/Loading";
+import SelectBlock from "../../../components/SelectBlock";
 
 ChartJS.register(
   CategoryScale,
@@ -29,12 +31,13 @@ ChartJS.register(
  * TCP 连接数 组件
  */
 const TcpCurrEstabChart = () => {
+  const [period, setPeriod] = useState(300);
   const {
     status,
     data: TcpCurrEstabData,
     error,
-  } = useQuery<any>("TcpCurrEstab", async () => {
-    const res: any = await fetchNetwork("TcpCurrEstab");
+  } = useQuery<any>(["TcpCurrEstab", period], async () => {
+    const res: any = await fetchNetwork("TcpCurrEstab", period);
 
     const timestamps = res.DataPoints[0].Timestamps.slice(-10).map(
       (item: number) => toTime(item)
@@ -61,9 +64,12 @@ const TcpCurrEstabChart = () => {
 
   return (
     <>
-      <Box sx={{ pt: 5 }}>
-        <Typography variant="h5">TCP 连接数 (个)</Typography>
-      </Box>
+      <div style={{ display: "flex", alignItems: "center", marginTop: "50px" }}>
+        <Box sx={{ mr: 5 }}>
+          <Typography variant="h5">TCP 连接数 (个)</Typography>
+        </Box>
+        <SelectBlock period={period} setPeriod={setPeriod} />
+      </div>
       <Line
         height={70}
         options={{

@@ -3,9 +3,9 @@ import request from "../utils/request";
 /**
  * 根据参数返回数据
  */
-export function fetchNetwork(params: string) {
+export function fetchNetwork(params: string, period: number = 300) {
   return request({
-    url: `/monitorData?metricName=${params}&period=300`,
+    url: `/monitorData?metricName=${params}&period=${period}`,
     method: "GET",
   });
 }
