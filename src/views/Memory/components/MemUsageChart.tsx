@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useQuery } from "react-query";
 import {
@@ -15,6 +16,7 @@ import { Line } from "react-chartjs-2";
 import { fetchMemory } from "../../../api/memory";
 import { toTime } from "../../../utils/formatNumber";
 import Loading from "../../../components/Loading";
+import SelectBlock from "../../../components/SelectBlock";
 
 ChartJS.register(
   CategoryScale,
@@ -31,12 +33,13 @@ ChartJS.register(
  * 内存利用率
  */
 const MemUsageChart = () => {
+  const [period, setPeriod] = useState(300);
   const {
     status,
     data: MemUsageData,
     error,
-  } = useQuery<any>("MemUsageData", async () => {
-    const res: any = await fetchMemory("MemUsage");
+  } = useQuery<any>(["MemUsageData", period], async () => {
+    const res: any = await fetchMemory("MemUsage", period);
 
     const timestamps = res.DataPoints[0].Timestamps.slice(-10).map(
       (item: number) => toTime(item)
@@ -63,9 +66,13 @@ const MemUsageChart = () => {
 
   return (
     <>
-      <Box sx={{ pt: 10 }}>
-        <Typography variant="h5">内存利用率</Typography>
-      </Box>
+      <div style={{ display: "flex", alignItems: "center", marginTop: "50px" }}>
+        <Box sx={{ mr: 10 }}>
+          <Typography variant="h5">内存利用率</Typography>
+        </Box>
+        <SelectBlock period={period} setPeriod={setPeriod} />
+      </div>
+
       <Line
         height={70}
         options={{
